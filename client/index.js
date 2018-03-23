@@ -16,17 +16,24 @@ class App extends React.Component {
         super(props);
         this.state = {
             user: null,
+            users: [],
             messages: []
         };
 
         this.createWebSocketConnection = this.createWebSocketConnection.bind(this);
         this.sendUserName = this.sendUserName.bind(this);
         this.addUserToChat = this.addUserToChat.bind(this);
+        this.updateUsers = this.updateUsers.bind(this);
 
     }
 
     createWebSocketConnection() {
-        ws.createConnection();
+        ws.createConnection(this.updateUsers);
+    }
+
+    updateUsers(users) {
+        console.log(users)
+        this.setState({users});
     }
 
     sendUserName(name) {
