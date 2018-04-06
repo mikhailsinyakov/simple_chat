@@ -7,7 +7,6 @@ export default function () {
         ws = new WebSocket('ws://localhost:1234/', 'echo-protocol');
         ws.addEventListener('message', message => {
             message = JSON.parse(message.data);
-            console.log(message.type)
             if (message.type == 'updateUsers') {
                 updateUsers(message.usernames);
             }
@@ -15,7 +14,6 @@ export default function () {
                 updateMessages(message.messages);
             }
             else {
-                console.log('addMessage branch')
                 addMessage(message);
             }
         });

@@ -57,7 +57,6 @@ class App extends React.Component {
     }
 
     addMessage(message) {
-        console.log(message + ' in addMessage')
         const messages = this.state.messages;
         messages.push(message);
         console.log(messages);

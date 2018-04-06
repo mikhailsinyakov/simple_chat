@@ -40,7 +40,12 @@ module.exports = app => {
 
         connection.on('close', () => {
             users[id] = null;
-            sendUsersListToClients();
+            if (filterActiveUsers(users).length) sendUsersListToClients();
+            else {
+                users.length = 0;
+                messages.length = 0;
+                count = 0;
+            }
         });
 
 
