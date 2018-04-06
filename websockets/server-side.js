@@ -73,7 +73,7 @@ module.exports = app => {
             type: 'newMessage',
             user: user.name,
             value: message.value,
-            time: new Date()
+            time: new Date().valueOf()
         }
         messages.push(newMessage);
 

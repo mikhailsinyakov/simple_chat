@@ -12,16 +12,19 @@ export default function () {
             }
             else if (message.type == 'existingMessages') {
                 let messages = message.messages;
-                messages = messages.map(message => {
-                    const {user, time, value} = message;
-                    return {user, time, value};
-                })
+                messages = messages.map(message => changeMessage(message));
                 updateMessages(messages);
             }
             else {
-                const {user, time, value} = message;
-                message = {user, time, value};
+                message = changeMessage(message);
                 addMessage(message);
+            }
+
+            function changeMessage(message) {
+                let {user, time, value} = message;
+                time = new Date(time);
+                time = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
+                return {user, time, value};
             }
         });
     };
