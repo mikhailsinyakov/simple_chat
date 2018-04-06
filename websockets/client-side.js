@@ -11,9 +11,16 @@ export default function () {
                 updateUsers(message.usernames);
             }
             else if (message.type == 'existingMessages') {
-                updateMessages(message.messages);
+                let messages = message.messages;
+                messages = messages.map(message => {
+                    const {user, time, value} = message;
+                    return {user, time, value};
+                })
+                updateMessages(messages);
             }
             else {
+                const {user, time, value} = message;
+                message = {user, time, value};
                 addMessage(message);
             }
         });

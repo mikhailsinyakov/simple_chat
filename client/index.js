@@ -59,7 +59,6 @@ class App extends React.Component {
     addMessage(message) {
         const messages = this.state.messages;
         messages.push(message);
-        console.log(messages);
         this.setState({messages});
     }
 
@@ -70,7 +69,7 @@ class App extends React.Component {
 
         return (
             <div>
-                <Messages user={this.state.user}/>
+                <Messages messages={this.state.messages}/>
                 <Typing sendMessage={this.sendMessage}/>
             </div>
         )

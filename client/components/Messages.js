@@ -1,15 +1,11 @@
 "use strict";
 
 import React from 'react';
+import Message from './Message';
 
-export default class Messages extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <h2>Привет, {this.props.user}</h2>
-        );
-    }
+export default function Messages (props) {
+    const messages = props.messages.map(message => {
+        return <Message message={message}/>;
+    })
+    return messages;
 }

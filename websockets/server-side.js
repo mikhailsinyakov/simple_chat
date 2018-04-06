@@ -29,7 +29,7 @@ module.exports = app => {
             if (message.type == 'username') {
                 users[id].name = message.username;
                 sendUsersListToClients();
-                if (messages.lenght) sendUserExistingMessages(users[id]);
+                if (messages.length) sendUserExistingMessages(users[id]);
             }
 
             else {
