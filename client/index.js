@@ -4,9 +4,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import WebSocket from '../websockets/client-side';
-import Greeting from './components/Greeting.js';
-import Messages from './components/Messages.js';
-import Typing from './components/Typing.js';
+import Greeting from './components/Greeting';
+import Messages from './components/Messages';
+import Typing from './components/Typing';
+import Info from './components/Info';
 
 const app = document.querySelector('#app');
 const ws = new WebSocket();
@@ -69,6 +70,7 @@ class App extends React.Component {
 
         return (
             <div>
+                <Info users={this.state.users}/>
                 <Messages messages={this.state.messages}/>
                 <Typing sendMessage={this.sendMessage}/>
             </div>
