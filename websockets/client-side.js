@@ -3,15 +3,20 @@
 export default function () {
     let ws;
 
-    this.createConnection = updateUsers => {
+    this.createConnection = (updateUsers, updateMessages, addMessage) => {
         ws = new WebSocket('ws://localhost:1234/', 'echo-protocol');
         ws.addEventListener('message', message => {
             message = JSON.parse(message.data);
-            if (message.type == 'username') {
-                updateUsers(message.names);
+            console.log(message.type)
+            if (message.type == 'updateUsers') {
+                updateUsers(message.usernames);
+            }
+            else if (message.type == 'existingMessages') {
+                updateMessages(message.messages);
             }
             else {
-
+                console.log('addMessage branch')
+                addMessage(message);
             }
         });
     };
@@ -24,6 +29,16 @@ export default function () {
             };
             ws.send(JSON.stringify(obj));
         });
+    };
+
+    this.sendMessage = message => {
+        if (ws.readyState == 1) {
+            message = {
+                type: 'newMessage',
+                value: message
+            };
+            ws.send(JSON.stringify(message));
+        }
     };
 
 }

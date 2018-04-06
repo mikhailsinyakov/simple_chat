@@ -24,15 +24,17 @@ class App extends React.Component {
         this.sendUserName = this.sendUserName.bind(this);
         this.addUserToChat = this.addUserToChat.bind(this);
         this.updateUsers = this.updateUsers.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
+        this.updateMessages = this.updateMessages.bind(this);
+        this.addMessage = this.addMessage.bind(this);
 
     }
 
     createWebSocketConnection() {
-        ws.createConnection(this.updateUsers);
+        ws.createConnection(this.updateUsers, this.updateMessages, this.addMessage);
     }
 
     updateUsers(users) {
-        console.log(users)
         this.setState({users});
     }
 
@@ -46,6 +48,22 @@ class App extends React.Component {
         this.sendUserName(name);
     }
 
+    sendMessage(message) {
+        ws.sendMessage(message);
+    }
+
+    updateMessages(messages) {
+        this.setState({messages})
+    }
+
+    addMessage(message) {
+        console.log(message + ' in addMessage')
+        const messages = this.state.messages;
+        messages.push(message);
+        console.log(messages);
+        this.setState({messages});
+    }
+
     render() {
         if (!this.state.user) {
             return <Greeting addUserToChat={this.addUserToChat}/>
@@ -54,7 +72,7 @@ class App extends React.Component {
         return (
             <div>
                 <Messages user={this.state.user}/>
-                <Typing/>
+                <Typing sendMessage={this.sendMessage}/>
             </div>
         )
     }

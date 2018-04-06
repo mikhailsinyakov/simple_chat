@@ -13,6 +13,8 @@ export default class Greeting extends React.Component {
     }
 
     handleInput(value) {
+        value = value.length ? value[0].toUpperCase() + value.slice(1) 
+                             : value;
         this.setState({value});
     }
 
@@ -23,7 +25,7 @@ export default class Greeting extends React.Component {
     render() {
         return (
             <div>
-                <h2>Привет, незнакомец</h2>
+                <h2>Привет</h2>
                 <label>
                     Напиши свое имя:
                     <input type="text" name="name" value={this.state.value} 

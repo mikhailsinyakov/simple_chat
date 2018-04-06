@@ -13,51 +13,74 @@ module.exports = app => {
         httpServer: server
     });
 
-    let clients = {};
-    let countClients = 0;
-    const messages = [];
+    let users = [];
+    let count = 0;
+    let messages = [];
 
-    wsServer.on('request', r => {
-        const connection = r.accept('echo-protocol', r.origin);
+    wsServer.on('request', req => {
+        const connection = req.accept('echo-protocol', req.origin);
 
-        const id = countClients++;
-        clients[id] = {connection};
+        const id = count++;
+        users[id] = {connection};
         
         connection.on('message', message => {
             message = JSON.parse(message.utf8Data);
 
             if (message.type == 'username') {
-                clients[id].name = message.username;
-                let clientNames = {
-                    type: 'username',
-                    names: []
-                };
-
-                for (let key in clients) {
-                    clientNames.names.push(clients[key].name);
-                }
-
-                for (let key in clients) {
-                    const clientsStr = JSON.stringify(clientNames);
-                    clients[key].connection.send(clientsStr);
-                }
+                users[id].name = message.username;
+                sendUsersListToClients();
+                if (messages.lenght) sendUserExistingMessages(users[id]);
             }
 
             else {
-                for (let key in clients) {
-                    const messageStr = JSON.stringify(message);
-                    clients[key].connection.send(messageStr);
-                }
+                sendUsersNewMessage(users[id], message);
             }
             
         });
 
         connection.on('close', () => {
-            delete clients[id];
-            countClients--;
-        })
+            users[id] = null;
+            sendUsersListToClients();
+        });
+
 
     });
 
+    function filterActiveUsers(users) {
+        return users.filter(user => user);
+    }
+
+    function objToStr(obj) {
+        return JSON.stringify(obj);
+    }
+
+    function sendUsersListToClients() {
+        const usernames = filterActiveUsers(users).map(user => user.name);
+        const message = {
+            type: 'updateUsers',
+            usernames
+        };
+        filterActiveUsers(users).forEach(user => user.connection.send(objToStr(message)));
+    }
+
+    function sendUsersNewMessage(user, message) {
+        const newMessage = {
+            type: 'newMessage',
+            user: user.name,
+            value: message.value,
+            time: new Date()
+        }
+        messages.push(newMessage);
+
+        filterActiveUsers(users).forEach(user => user.connection.send(objToStr(newMessage)));
+    }
+
+    function sendUserExistingMessages(user) {
+        const message = {
+            type: 'existingMessages',
+            messages
+        };
+        user.connection.send(objToStr(message));
+    }
 
 };
