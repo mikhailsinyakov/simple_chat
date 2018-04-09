@@ -8,8 +8,9 @@ export default function Info (props) {
     });
 
     return (
-        <p>
-            Пользователи, находящиеся на сайте: {users}
-        </p>
+        <div className="info bg-info">
+            <h5 className="text-center">На сайте:</h5>
+            <p>{users}</p>
+        </div>
     );
 }

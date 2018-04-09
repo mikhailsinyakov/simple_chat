@@ -9,6 +9,7 @@ export default class Greeting extends React.Component {
             value: ''
         };
         this.handleInput = this.handleInput.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -18,20 +19,24 @@ export default class Greeting extends React.Component {
         this.setState({value});
     }
 
+    handleKeyPress(e) {
+        e.persist();
+        if (e.key == "Enter") this.handleSubmit();
+    }
+
     handleSubmit() {
         this.props.addUserToChat(this.state.value);
     }
 
     render() {
         return (
-            <div>
-                <h2>Привет</h2>
-                <label>
-                    Напиши свое имя:
-                    <input type="text" name="name" value={this.state.value} 
-                        onInput={e => this.handleInput(e.target.value)} autofocus required/>
-                    <button type="button" onClick={this.handleSubmit}>Войти в чат</button>
-                </label>
+            <div className="greeting text-center">
+                <p>Для того, чтобы войти в чат, напиши свое имя: </p>
+                <input type="text" name="name" value={this.state.value} 
+                    placeholder="Имя или ник" autofocus="true" required
+                    onInput={e => this.handleInput(e.target.value)}
+                    onKeyPress={this.handleKeyPress}/>
+                <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Войти</button>
             </div>
         );
     }

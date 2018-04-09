@@ -23,7 +23,10 @@ export default function () {
             function changeMessage(message) {
                 let {user, time, value} = message;
                 time = new Date(time);
-                time = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
+                let hours = time.getHours() < 10 ? '0' + time.getHours() : time.getHours().toString();
+                let minutes = time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes().toString();
+                let seconds = time.getSeconds() < 10 ? '0' + time.getSeconds() : time.getSeconds().toString();
+                time = `${hours}:${minutes}:${seconds}`;
                 return {user, time, value};
             }
         });

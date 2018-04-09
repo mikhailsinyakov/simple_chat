@@ -4,10 +4,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import WebSocket from '../websockets/client-side';
+import Header from './components/Header';
 import Greeting from './components/Greeting';
 import Messages from './components/Messages';
 import Typing from './components/Typing';
 import Info from './components/Info';
+import Footer from './components/Footer'
 
 const app = document.querySelector('#app');
 const ws = new WebSocket();
@@ -28,6 +30,7 @@ class App extends React.Component {
         this.sendMessage = this.sendMessage.bind(this);
         this.updateMessages = this.updateMessages.bind(this);
         this.addMessage = this.addMessage.bind(this);
+        this.scrollMainElemToBottom = this.scrollMainElemToBottom.bind(this);
 
     }
 
@@ -54,27 +57,43 @@ class App extends React.Component {
     }
 
     updateMessages(messages) {
-        this.setState({messages})
+        this.setState({messages}, this.scrollMainElemToBottom);
     }
 
     addMessage(message) {
         const messages = this.state.messages;
         messages.push(message);
-        this.setState({messages});
+        this.setState({messages}, this.scrollMainElemToBottom);
+    }
+
+    scrollMainElemToBottom() {
+        const mainElem = document.querySelector('main');
+        mainElem.scrollTop = mainElem.scrollHeight - mainElem.clientHeight;
     }
 
     render() {
-        if (!this.state.user) {
-            return <Greeting addUserToChat={this.addUserToChat}/>
-        }
+        
+        const main = (
+            <main>
+                {
+                    !this.state.user 
+                        ? <Greeting addUserToChat={this.addUserToChat}/>
+                        : (<div>
+                            <Info users={this.state.users}/>
+                            <Messages messages={this.state.messages}/>
+                            <Typing sendMessage={this.sendMessage}/>
+                          </div>)
+                }
+            </main>
+        );
 
         return (
-            <div>
-                <Info users={this.state.users}/>
-                <Messages messages={this.state.messages}/>
-                <Typing sendMessage={this.sendMessage}/>
+            <div className="container">
+                <Header user={this.state.user} />
+                {main}
+                <Footer />
             </div>
-        )
+        );
     }
 }
 
