@@ -1,14 +1,15 @@
 "use strict";
 
-const http = require('http');
-const server = http.createServer((req, res) => {});
-const WebSocketServer = require('websocket').server;
 
-server.listen(1234, () => 'Server is listening..');
 
 
 module.exports = app => {
+    const http = require('http');
+    const server = http.createServer(app);
+    const WebSocketServer = require('websocket').server;
+    const port = process.env.PORT;
 
+    server.listen(port, () => 'Server is listening..');
     const wsServer = new WebSocketServer({
         httpServer: server
     });
