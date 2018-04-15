@@ -8,7 +8,7 @@ export default function Messages (props) {
     const noMessage = <p className="text-center">Сообщений пока нет</p>;
 
     const messages = props.messages.map(message => {
-        return <Message message={message}/>;
+        return <Message message={message} user={props.user}/>;
     });
 
     return (

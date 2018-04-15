@@ -78,7 +78,7 @@ class App extends React.Component {
                     !this.state.user 
                         ? <Greeting addUserToChat={this.addUserToChat}/>
                         : (<div className="main-wrapper">
-                            <Messages messages={this.state.messages}/>
+                            <Messages messages={this.state.messages} user={this.state.user}/>
                             <Typing sendMessage={this.sendMessage}/>
                           </div>)
                 }
