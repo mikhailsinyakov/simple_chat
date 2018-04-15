@@ -9,7 +9,7 @@ export default function () {
             wsPort = 'ws://localhost:8080/';
         }
         else {
-            wsPort = 'ws://simple-chat-1.herokuapp.com/';
+            wsPort = 'wss://simple-chat-1.herokuapp.com/';
         }
         ws = new WebSocket(wsPort, 'echo-protocol');
         ws.addEventListener('message', message => {
