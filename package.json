@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/mikhailsinyakov/simple_chat/issues"
   },
-  "homepage": "https://github.com/mikhailsinyakov/simple_chat#readme",
+  "homepage": "https://simple-chat-1.herokuapp.com/",
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.4",
