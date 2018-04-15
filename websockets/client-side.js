@@ -4,7 +4,14 @@ export default function () {
     let ws;
 
     this.createConnection = (updateUsers, updateMessages, addMessage) => {
-        ws = new WebSocket('ws://localhost:1234/', 'echo-protocol');
+        let wsPort;
+        if (location.href == "http://localhost:8080/") {
+            wsPort = 'ws://localhost:1234/';
+        }
+        else {
+            wsPort = 'wss://simple-chat-1.herokuapp.com:1234/';
+        }
+        ws = new WebSocket(wsPort, 'echo-protocol');
         ws.addEventListener('message', message => {
             message = JSON.parse(message.data);
             if (message.type == 'updateUsers') {
