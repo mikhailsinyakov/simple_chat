@@ -8,7 +8,6 @@ import Header from './components/Header';
 import Greeting from './components/Greeting';
 import Messages from './components/Messages';
 import Typing from './components/Typing';
-import Info from './components/Info';
 import Footer from './components/Footer'
 
 const app = document.querySelector('#app');
@@ -78,8 +77,7 @@ class App extends React.Component {
                 {
                     !this.state.user 
                         ? <Greeting addUserToChat={this.addUserToChat}/>
-                        : (<div>
-                            <Info users={this.state.users}/>
+                        : (<div className="main-wrapper">
                             <Messages messages={this.state.messages}/>
                             <Typing sendMessage={this.sendMessage}/>
                           </div>)
@@ -89,7 +87,7 @@ class App extends React.Component {
 
         return (
             <div className="container">
-                <Header user={this.state.user} />
+                <Header user={this.state.user} users={this.state.users} />
                 {main}
                 <Footer />
             </div>

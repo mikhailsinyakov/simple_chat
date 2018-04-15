@@ -32,7 +32,7 @@ export default class Typing extends React.Component {
 
     render() {
         return (
-            <div className="text-center">
+            <div className="typing text-center">
                 <input type="text" value={this.state.value} autofocus="true"
                  onInput={this.handleInput} onKeyPress={this.handleKeyPress}/>
                 <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>

@@ -17,6 +17,23 @@ footer {
     padding: 20px;
 }
 
+.header-wrapper {
+    position: relative;
+}
+
+.info {
+    position: absolute;
+    margin-top: 10px;
+    width: 200px;
+    left: 15px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.info p {
+    color: red;
+}
+
 .container {
     display: flex;
     height: 100vh;
@@ -24,8 +41,8 @@ footer {
 }
 
 main {
-    position: relative;
     flex: 1;
+    margin-left: 100px;
     padding: 15px;
     overflow-y: auto;
 }
@@ -53,20 +70,14 @@ a:hover {
     color: red;
 }
 
-.info {
-    position: absolute;
-    width: 200px;
-    left: 15px;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.info p {
-    color: red;
+.main-wrapper {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .messages {
     margin: 10px;
+    flex-grow: 1;
     text-align: right;
 }
 
@@ -92,4 +103,8 @@ a:hover {
 
 .message-time {
     margin-left: 10px;
+}
+
+.typing {
+    width: 100%;
 }
